@@ -144,3 +144,6 @@ void AroyaReader::deleteTable(const int&col) {
 		data[i].erase(data[i].begin() + col);
 	}
 }
+void AroyaReader::deleteRow(const int&row) {
+	data.erase(data.begin() + row);
+}

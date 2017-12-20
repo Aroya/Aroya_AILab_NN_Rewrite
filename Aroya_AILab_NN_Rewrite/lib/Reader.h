@@ -30,7 +30,7 @@ public:
 	void deleteTable(const int&col);
 
 	//空值处理:删除空值行
-	void NullDelete();
+	void deleteRow(const int&row);
 	//非连续数字→离散table
 	void discrete(const int&column);
 	//自动搜索所有列，自动转所有非数字连续列为离散的列
