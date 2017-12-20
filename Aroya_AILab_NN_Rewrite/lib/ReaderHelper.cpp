@@ -45,3 +45,14 @@ vector<vector<double>> AroyaReaderHelper::getData() {
 	}
 	return temp;
 }
+
+BPNNBicycleSetHelper::BPNNBicycleSetHelper() {
+
+}
+void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
+	/*删除时间列
+	使用已有的月份和weekday信息*/
+	reader.deleteTable(reader.findTable("dteday"));
+	
+	
+}

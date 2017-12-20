@@ -9,6 +9,7 @@ class AroyaReaderHelper {
 public:
 	AroyaReaderHelper();
 	//insert table
+	
 	//if not input myTableName, will set it as same as tableName
 	void insert(AroyaReader&reader, const char*tableName, const char*myTableName=nullptr);
 	//for AroyaKMeans to load
@@ -18,6 +19,12 @@ private:
 	vector<string>table;
 	vector<vector<double>>buffer;
 	vector<double>empty;
+};
+
+class BPNNBicycleSetHelper :public AroyaReaderHelper {
+public:
+	BPNNBicycleSetHelper();
+	void BPNN_bicycleSet(AroyaReader&reader);
 };
 
 #endif
