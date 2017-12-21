@@ -50,9 +50,21 @@ BPNNBicycleSetHelper::BPNNBicycleSetHelper() {
 
 }
 void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
+	//删除空值行
+	int i, j;
+	for (i = 0; i < reader.getRows(); i++) {
+		for (j = 0; j < reader.getColumns(); j++) {
+			if (reader.getStringData(i, j) == "?") {
+				reader.deleteRow(i);
+				i--;
+				break;
+			}
+		}
+	}
+	//处理时间列
 	/*删除时间列
 	使用已有的月份和weekday信息*/
 	reader.deleteTable(reader.findTable("dteday"));
-	
+
 	
 }
