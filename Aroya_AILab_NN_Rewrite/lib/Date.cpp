@@ -40,15 +40,14 @@ void AroyaDate::input(const string&str) {
 	}
 	//计算日期差instant和weekday
 	instant = 0;
+	//年
 	for (i = StartYear; i < year; i++) {
-		if (i % 100 && !(i % 4)) {
-			instant += 366;
-		}
-		else if (!(i % 400)) {
+		if (i % 100 && !(i % 4) || !(i % 400)) {
 			instant += 366;
 		}
 		else instant += 365;
 	}
+	//月
 	for (i = StartMonth; i < month; i++) {
 		switch (i)
 		{
@@ -77,9 +76,33 @@ void AroyaDate::input(const string&str) {
 			instant += August;
 			break;
 		case 9:
+			instant += September;
+			break;
+		case 10:
+			instant += October;
+			break;
+		case 11:
+			instant += November;
+			break;
+		case 12:
+			instant += December;
 			break;
 		default:
+			printf("Error month:%d\n",i);
+			system("pause");
 			break;
+		}
+	}
+	//日
+	instant += day - StartDay;
+	//周
+	{
+		int temp = instant % 7;
+		if (temp > 1) {
+			weekday = temp - 1;
+		}
+		else {
+			weekday = temp + 6;
 		}
 	}
 }
@@ -87,3 +110,6 @@ void AroyaDate::input(const string&str) {
 bool static PureNumber(const char&t) {
 	return t >= '0'&&t <= '9';
 }
+int AroyaDate::getWeekday() { return weekday; }
+int AroyaDate::getDateInstant() { return instant; }
+int AroyaDate::getMonth() { return month; }
