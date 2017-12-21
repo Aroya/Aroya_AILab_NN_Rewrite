@@ -1,4 +1,5 @@
 #include"Reader.h"
+#include"Date.h"
 
 //仅依据不包含数字、小数点来判断
 bool static NotPureNumber(const string&);
@@ -139,11 +140,42 @@ bool static PureNumber(const char&t) {
 void AroyaReader::setTableName(const char*origin, const char*new_) {
 	data[0][findTable(origin)] = new_;
 }
-void AroyaReader::deleteTable(const int&col) {
+void AroyaReader::deleteColumn(const int&col) {
 	for (int i = 0; i < rows; i++) {
 		data[i].erase(data[i].begin() + col);
 	}
 }
 void AroyaReader::deleteRow(const int&row) {
 	data.erase(data.begin() + row);
+}
+
+void AroyaReader::dispartTime(const char*tableName,const bool&flag) {
+	int column = findTable(tableName);
+	AroyaDate date;
+
+	//table
+	data[0].push_back("month");
+	data[0].push_back("weekday");
+
+	//temp str
+	string str;
+	for (int i = 1; i < getRows(); i++) {
+		date.input(data[i][column]);
+		//clear stringstream
+		internalSst.str("");
+		internalSst.clear();
+		//get Month
+		internalSst << date.getMonth();
+		internalSst >> str;
+		data[i].push_back(str);
+		//clear stringstream
+		internalSst.str("");
+		internalSst.clear();
+		//get Weekday
+		internalSst << date.getWeekday();
+		internalSst >> str;
+		data[i].push_back(str);
+	}
+	//删除原数据列
+	if (flag)deleteColumn(column);
 }

@@ -14,6 +14,8 @@ public:
 	void insert(AroyaReader&reader, const char*tableName, const char*myTableName=nullptr);
 	//for AroyaKMeans to load
 	vector<vector<double>> getData();
+	//πÈ“ªªØ
+	void normalization();
 private:
 	int findTable(const char*tableName);
 	vector<string>table;

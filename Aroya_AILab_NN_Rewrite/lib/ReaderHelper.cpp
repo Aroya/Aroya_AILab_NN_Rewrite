@@ -45,6 +45,14 @@ vector<vector<double>> AroyaReaderHelper::getData() {
 	}
 	return temp;
 }
+void AroyaReaderHelper::normalization() {
+	//归一化
+	//若有归一化文件记录则从中读取标准
+
+	//没有则计算出标准
+
+	//记录文件
+}
 
 BPNNBicycleSetHelper::BPNNBicycleSetHelper() {
 
@@ -61,10 +69,20 @@ void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
 			}
 		}
 	}
-	//处理时间列
-	/*删除时间列
-	使用已有的月份和weekday信息*/
-	reader.deleteTable(reader.findTable("dteday"));
+	//处理时间数据
+	reader.dispartTime("dteday");
 
+	//处理非数字类型数据
 	
+
+	//将表示类型的连续数据转离散
+
+
+	//将处理后的reader插入当前helper
+	//string→double
+
+
+	//调用helper的归一化函数
+	//归一化函数未完成
+
 }
