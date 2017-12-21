@@ -12,6 +12,8 @@ public:
 	
 	//if not input myTableName, will set it as same as tableName
 	void insert(AroyaReader&reader, const char*tableName, const char*myTableName=nullptr);
+	//insert by column position
+	void insert(AroyaReader&reader, const int&col);
 	//for AroyaKMeans to load
 	vector<vector<double>> getData();
 	//πÈ“ªªØ
@@ -23,10 +25,6 @@ private:
 	vector<double>empty;
 };
 
-class BPNNBicycleSetHelper :public AroyaReaderHelper {
-public:
-	BPNNBicycleSetHelper();
-	void BPNN_bicycleSet(AroyaReader&reader);
-};
+
 
 #endif

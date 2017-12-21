@@ -91,8 +91,8 @@ void AroyaReader::discrete(const int&column) {
 	}
 
 	//添加数据
-	//首行列名称
-	for (i = 0; i < nums; i++)data[0].push_back(tables[i]);
+	//首行列名称 原table名+'/'+值
+	for (i = 0; i < nums; i++)data[0].push_back(data[0][column]+"/"+tables[i]);
 	//每行存在则0，不存在为1
 	for (i = 1; i < rows; i++) {
 		for (j = 0; j < nums; j++) {

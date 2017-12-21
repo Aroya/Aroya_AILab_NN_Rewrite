@@ -21,6 +21,17 @@ void AroyaReaderHelper::insert(AroyaReader&reader, const char*tableName, const c
 		buffer[myPosition].push_back(reader.getDoubleData(i, t));
 	}
 }
+
+void AroyaReaderHelper::insert(AroyaReader&reader, const int&col) {
+	//table名称
+	table.push_back(reader.getStringData(0, col));
+	int i, l = reader.getRows(), j = buffer.size();
+	//新列创建
+	buffer.push_back(empty);
+	for (i = 1; i < l; i++) {
+		buffer[j].push_back(reader.getDoubleData(i, col));
+	}
+}
 int AroyaReaderHelper::findTable(const char*tableName) {
 	int i, j;
 	i = table.size();
@@ -52,37 +63,4 @@ void AroyaReaderHelper::normalization() {
 	//没有则计算出标准
 
 	//记录文件
-}
-
-BPNNBicycleSetHelper::BPNNBicycleSetHelper() {
-
-}
-void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
-	//删除空值行
-	int i, j;
-	for (i = 0; i < reader.getRows(); i++) {
-		for (j = 0; j < reader.getColumns(); j++) {
-			if (reader.getStringData(i, j) == "?") {
-				reader.deleteRow(i);
-				i--;
-				break;
-			}
-		}
-	}
-	//处理时间数据
-	reader.dispartTime("dteday");
-
-	//处理非数字类型数据
-	
-
-	//将表示类型的连续数据转离散
-
-
-	//将处理后的reader插入当前helper
-	//string→double
-
-
-	//调用helper的归一化函数
-	//归一化函数未完成
-
 }
