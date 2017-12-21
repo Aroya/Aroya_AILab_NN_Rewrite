@@ -122,7 +122,7 @@ void AroyaReader::discrete() {
 }
 
 bool static NotPureNumber(const string&str) {
-	int i, l = str.length;
+	int i, l = str.length();
 	char left = '0' - 1, right = '9' + 1;
 	bool point = true;
 	for (i = 0; i < l; i++) {
