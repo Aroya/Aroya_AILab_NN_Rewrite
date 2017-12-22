@@ -57,10 +57,64 @@ vector<vector<double>> AroyaReaderHelper::getData() {
 	return temp;
 }
 void AroyaReaderHelper::normalization() {
+	int i, j, k, l;
+	double max, min, t;
+	bool exist;
 	//归一化
+	vector<string>normal_table;
+	vector<double>normal_max;
+	vector<double>normal_min;
 	//若有归一化文件记录则从中读取标准
+	ifstream fin;
+	fin.open("normal.csv");
+	if (fin.is_open()) {
+		fin.close();
+		AroyaReader normal_reader;
+		normal_reader.read("normal.csv");
+		j = normal_reader.getColumns();
+		for (i = 0; i < j; i++) {
+			normal_table.push_back(normal_reader.getStringData(0, i));
+			normal_max.push_back(normal_reader.getDoubleData(1, i));
+			normal_min.push_back(normal_reader.getDoubleData(2, i));
+		}
+	}
 
 	//没有则计算出标准
+	j = table.size();
+	for (i = 0; i < j; i++) {
+		//再当前table中查找
+		l = normal_table.size();
+		exist = false;
+		for (k = 0; k < l; k++) {
+			if (table[i] == normal_table[k]) {
+				exist = true;
+				break;
+			}
+		}
+		//不存在
+		if (!exist) {
+			normal_table.push_back(table[i]);
+			//计算用于归一化的标准
+			l = buffer[i].size();
+			max = buffer[i][0];
+			min = buffer[i][0];
+			//找到最大值和最小值
+			for (k = 0; k < l; k++) {
+				t = buffer[i][k];
+				if (t > max) {
+					max = t;
+				}
+				else if (t < min) {
+					min = t;
+				}
+			}
+			normal_max.push_back(max);
+			normal_min.push_back(min);
+		}
+	}
+
+	//归一化处理
+
 
 	//记录文件
 }
