@@ -1,7 +1,5 @@
-#include"ReaderHelper.h"
-#include"BpnnReaderHelper.h"
 
-using namespace std;
+#include"BpnnReaderHelper.h"
 
 BPNNBicycleSetHelper::BPNNBicycleSetHelper() {
 

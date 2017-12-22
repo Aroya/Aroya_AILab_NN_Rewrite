@@ -111,11 +111,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="lib\BpnnReaderHelper.cpp" />
+    <ClCompile Include="lib\Date.cpp" />
     <ClCompile Include="lib\Reader.cpp" />
     <ClCompile Include="lib\ReaderHelper.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lib\BpnnReaderHelper.h" />
+    <ClInclude Include="lib\Date.h" />
     <ClInclude Include="lib\Reader.h" />
     <ClInclude Include="lib\ReaderHelper.h" />
   </ItemGroup>

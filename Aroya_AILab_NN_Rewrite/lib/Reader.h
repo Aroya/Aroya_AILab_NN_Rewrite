@@ -1,12 +1,13 @@
 #ifndef	Aroya_READER
 #define Aroya_READER
+
 #include<string>
 #include<vector>
 #include<fstream>
 #include<iostream>
 #include<sstream>
-
 using namespace std;
+#include"Date.h"
 
 class AroyaReader {
 private:

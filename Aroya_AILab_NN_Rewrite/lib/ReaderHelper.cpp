@@ -56,13 +56,52 @@ vector<vector<double>> AroyaReaderHelper::getData() {
 	}
 	return temp;
 }
+void AroyaReaderHelper::writeFile(const char*fileName) {
+	vector<vector<double>>ans = getData();
+	ofstream fout;
+	fout.open(fileName);
+	if (fout.is_open()) {
+		int i, j, rows, cols;
+		bool notFirst;
+		cols = table.size();
+		rows = ans.size();
+		notFirst = false;
+		for (i = 0; i < cols; i++) {
+			if (notFirst) {
+				fout << ',' << table[i];
+			}
+			else {
+				fout << table[i];
+				notFirst = true;
+			}
+		}
+		fout << endl;
+		for (i = 0; i < rows; i++) {
+			notFirst = false;
+			for (j = 0; j < cols; j++) {
+				if (notFirst) {
+					fout << ',' << ans[i][j];
+				}
+				else {
+					fout << ans[i][j];
+					notFirst = true;
+				}
+			}
+			fout << endl;
+		}
+	}
+	else {
+		printf("AroyaReaderHelper::writeFile()cannot write %s\n",fileName);
+	}
+}
 void AroyaReaderHelper::normalization() {
-	int i, j, k, l;
-	double max, min, t;
+	int i, j, k, l, p;
+	double t, max, min, diff;
 	bool exist;
+	string str;
 	//归一化
 	vector<string>normal_table;
-	vector<double>normal_max;
+	vector<double>normal_diff;
 	vector<double>normal_min;
 	//若有归一化文件记录则从中读取标准
 	ifstream fin;
@@ -74,15 +113,18 @@ void AroyaReaderHelper::normalization() {
 		j = normal_reader.getColumns();
 		for (i = 0; i < j; i++) {
 			normal_table.push_back(normal_reader.getStringData(0, i));
-			normal_max.push_back(normal_reader.getDoubleData(1, i));
+			normal_diff.push_back(normal_reader.getDoubleData(1, i));
 			normal_min.push_back(normal_reader.getDoubleData(2, i));
 		}
+	}
+	else {
+		printf("AroyaReaderHelper::normalization()cannot read normal.csv\n");
 	}
 
 	//没有则计算出标准
 	j = table.size();
 	for (i = 0; i < j; i++) {
-		//再当前table中查找
+		//在当前table中查找
 		l = normal_table.size();
 		exist = false;
 		for (k = 0; k < l; k++) {
@@ -108,13 +150,62 @@ void AroyaReaderHelper::normalization() {
 					min = t;
 				}
 			}
-			normal_max.push_back(max);
+			normal_diff.push_back(max - min);
 			normal_min.push_back(min);
 		}
 	}
 
 	//归一化处理
-
-
+	for (i = 0; i < j; i++) {
+		//查找归一化数据位置
+		str = table[i];
+		for (p = 0; p < j; p++) {
+			if (str == normal_table[p])break;
+		}
+		//得到数据
+		diff = normal_diff[p];
+		min = normal_min[p];
+		//根据得到的标准处理数据
+		l = buffer[i].size();
+		for (k = 0; k < l; k++) {
+			buffer[i][k] = (buffer[i][k] - min) / diff;
+		}
+	}
 	//记录文件
+	ofstream fout;
+	fout.open("normal.csv");
+	if (fout.is_open()) {
+		j = normal_table.size();
+		exist = false;
+		for (i = 0; i < j; i++) {
+			if (exist)fout << ',' << normal_table[i];
+			else {
+				fout << normal_table[i];
+				exist = true;
+			}
+		}
+		fout << endl;
+		exist = false;
+		for (i = 0; i < j; i++) {
+			if (exist)fout << ',' << normal_diff[i];
+			else {
+				fout << normal_diff[i];
+				exist = true;
+			}
+		}
+		fout << endl;
+		exist = false;
+		for (i = 0; i < j; i++) {
+			if (exist)fout << ',' << normal_min[i];
+			else {
+				fout << normal_min[i];
+				exist = true;
+			}
+		}
+		fout << endl;
+		fout.close();
+	}
+	else {
+		printf("AroyaReaderHelper::normalization()cannot write normal.csv\n");
+	}
 }

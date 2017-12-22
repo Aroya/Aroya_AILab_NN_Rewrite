@@ -1,6 +1,3 @@
-#include<string>
-#include<sstream>
-using namespace std;
 #include"Date.h"
 
 bool static PureNumber(const char&);
@@ -13,7 +10,7 @@ void AroyaDate::input(const string&str) {
 	stringstream sst;
 	char temp;
 	int position = 0;
-	int i, l = str.length;
+	int i, l = str.length();
 	//读取年月日
 	for (i = 0; i < l; i++) {
 		if (PureNumber(temp = str[i])) {
@@ -31,13 +28,17 @@ void AroyaDate::input(const string&str) {
 				sst >> month;
 				break;
 			default:
-				sst >> day;
 				break;
 			}
 			position++;
 			buffer.clear();
 		}
 	}
+	//跳出时最后的day存储在buffer中
+	sst.str(buffer);
+	sst.clear();
+	sst >> day;
+
 	//计算日期差instant和weekday
 	instant = 0;
 	//年
@@ -56,6 +57,10 @@ void AroyaDate::input(const string&str) {
 			break;
 		case 2:
 			//特殊情况
+			if (year % 100 && !(year % 4) || !(year % 400)) {
+				instant += 29;
+			}
+			else instant += 28;
 			break;
 		case 3:
 			instant += March;

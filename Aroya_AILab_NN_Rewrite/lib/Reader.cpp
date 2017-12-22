@@ -1,5 +1,4 @@
 #include"Reader.h"
-#include"Date.h"
 
 //仅依据不包含数字、小数点来判断
 bool static NotPureNumber(const string&);
@@ -78,14 +77,14 @@ void AroyaReader::discrete(const int&column) {
 		//是否在tables中已存在
 		exists = false;
 		for (j = 0; j < nums; j++) {
-			if (data[column][i] == tables[j]) {
+			if (data[i][column] == tables[j]) {
 				exists = true;
 				break;
 			}
 		}
 		//不存在则加入
 		if (!exists) {
-			tables.push_back(data[column][i]);
+			tables.push_back(data[i][column]);
 			nums++;
 		}
 	}

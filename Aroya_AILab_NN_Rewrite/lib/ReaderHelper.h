@@ -2,8 +2,9 @@
 #define Aroya_READER_HELPER
 
 #include<vector>
-#include"Reader.h"
+#include<fstream>
 using namespace std;
+#include"Reader.h"
 
 class AroyaReaderHelper {
 public:
@@ -18,6 +19,8 @@ public:
 	vector<vector<double>> getData();
 	//归一化
 	void normalization();
+	//写出数据
+	void writeFile(const char*fileName);
 private:
 	int findTable(const char*tableName);
 	vector<string>table;

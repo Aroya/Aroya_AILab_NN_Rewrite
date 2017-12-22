@@ -1,5 +1,10 @@
 #ifndef AROYA_DATE
 #define AROYA_DATE
+
+#include<sstream>
+#include<string>
+using namespace std;
+
 class AroyaDate {
 public:
 	AroyaDate();
