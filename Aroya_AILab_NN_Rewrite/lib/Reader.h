@@ -13,7 +13,6 @@ class AroyaReader {
 private:
 	vector<vector<string>>data;		//全部以string暂存
 	stringstream internalSst;		//转换使用
-	int rows, columns;
 public:
 	AroyaReader();
 	void read(const char*fileName);
@@ -34,6 +33,8 @@ public:
 	void discrete(const int&column);
 	//自动搜索所有列，自动转所有非数字连续列为离散的列
 	void discrete();
+	//处理非法数据
+	void deleteInstantZero();
 };
 
 #endif

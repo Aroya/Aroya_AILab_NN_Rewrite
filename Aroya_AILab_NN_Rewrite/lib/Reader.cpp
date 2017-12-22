@@ -41,8 +41,6 @@ void AroyaReader::read(const char*fileName) {
 		}
 	}
 	fin.close();
-	rows = data.size();
-	columns = data[0].size();
 }
 
 string AroyaReader::getStringData(const int&rows, const int&columns) {
@@ -65,11 +63,12 @@ int AroyaReader::findTable(const char*tableName) {
 	}
 	return -1;
 }
-int AroyaReader::getRows() { return rows; }
-int AroyaReader::getColumns() { return columns; }
+int AroyaReader::getRows() { return data.size(); }
+int AroyaReader::getColumns() { return data[0].size(); }
 
 void AroyaReader::discrete(const int&column) {
 	int i, j, nums = 0;
+	int rows = getRows();
 	bool exists = false;
 	//统计类型数量
 	vector<string>tables;
@@ -98,16 +97,14 @@ void AroyaReader::discrete(const int&column) {
 			if (data[i][column] == tables[j])data[i].push_back("1");
 			else data[i].push_back("0");
 		}
-		//清除原数据列
-		data[i].erase(data[i].begin()+column);
 	}
-	//更新列数信息
-	columns += nums;
-	columns -= 1;
+	//清除原数据列
+	deleteColumn(column);
 }
 
 void AroyaReader::discrete() {
 	bool toDiscrete;
+	int columns = getColumns();
 	for (int j = 1; j < columns; j++) {
 		toDiscrete = false;
 		//日期格式转日期
@@ -140,6 +137,7 @@ void AroyaReader::setTableName(const char*origin, const char*new_) {
 	data[0][findTable(origin)] = new_;
 }
 void AroyaReader::deleteColumn(const int&col) {
+	int rows = getRows();
 	for (int i = 0; i < rows; i++) {
 		data[i].erase(data[i].begin() + col);
 	}
@@ -177,4 +175,17 @@ void AroyaReader::dispartTime(const char*tableName,const bool&flag) {
 	}
 	//删除原数据列
 	if (flag)deleteColumn(column);
+}
+
+void AroyaReader::deleteInstantZero() {
+	int i, j, k;
+	j = findTable("instant");
+	k = getRows();
+	for (i = 0; i < k; i++) {
+		if (data[i][j] == "0") {
+			deleteRow(i);
+			i--;
+			k--;
+		}
+	}
 }

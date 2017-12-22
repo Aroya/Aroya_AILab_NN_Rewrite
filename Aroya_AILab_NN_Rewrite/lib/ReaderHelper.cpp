@@ -167,8 +167,11 @@ void AroyaReaderHelper::normalization() {
 		min = normal_min[p];
 		//根据得到的标准处理数据
 		l = buffer[i].size();
-		for (k = 0; k < l; k++) {
+		if(diff) for (k = 0; k < l; k++) {
 			buffer[i][k] = (buffer[i][k] - min) / diff;
+		}
+		else for (k = 0; k < l; k++) {
+			buffer[i][k] = 0;
 		}
 	}
 	//记录文件

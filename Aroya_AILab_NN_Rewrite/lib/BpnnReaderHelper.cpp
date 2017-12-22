@@ -16,8 +16,13 @@ void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
 			}
 		}
 	}
+	//删除非法数据
+	reader.deleteInstantZero();
 	//处理时间数据
 	reader.dispartTime("dteday");
+	//处理离散的数据
+	reader.discrete(reader.findTable("weekday"));
+	reader.discrete(reader.findTable("month"));
 
 	//处理非数字类型数据
 	//时间离散化
@@ -37,5 +42,5 @@ void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
 
 	//调用helper的归一化函数
 	//归一化函数未完成
-
+	normalization();
 }
