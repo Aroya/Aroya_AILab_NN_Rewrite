@@ -32,15 +32,20 @@ void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
 
 	//删除数据编号
 	reader.deleteColumn(reader.findTable("instant"));
+}
 
+void BPNNBicycleSetHelper::BPNN_bicycleSetInsert(AroyaReader&reader) {
 	//将处理后的reader插入当前helper
 	//string→double
+	int i, j;
 	j = reader.getColumns();
 	for (i = 0; i < j; i++) {
+		if (reader.getStringData(0, i) != "cnt")
 		insert(reader, i);
 	}
+}
 
-	//调用helper的归一化函数
-	//归一化函数未完成
-	normalization();
+void BPNNBicycleSetHelper::BPNN_bicycleSetInsertFlag(AroyaReader&reader) {
+	int ps = reader.findTable("cnt");
+	insert(reader, ps);
 }

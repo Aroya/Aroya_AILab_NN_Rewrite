@@ -15,12 +15,20 @@ public:
 	void insert(AroyaReader&reader, const char*tableName, const char*myTableName=nullptr);
 	//insert by column position
 	void insert(AroyaReader&reader, const int&col);
-	//for AroyaKMeans to load
-	vector<vector<double>> getData();
+	
 	//归一化
 	void normalization();
 	//写出数据
 	void writeFile(const char*fileName);
+
+	//get
+	int getRows();
+	int getColumns();
+
+	//for AroyaKMeans to load
+	vector<vector<double>> getData();
+	//for bpnn to load
+	double** getDataPointer();
 private:
 	int findTable(const char*tableName);
 	vector<string>table;

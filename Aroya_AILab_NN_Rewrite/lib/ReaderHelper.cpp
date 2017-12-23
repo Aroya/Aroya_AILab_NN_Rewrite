@@ -41,21 +41,6 @@ int AroyaReaderHelper::findTable(const char*tableName) {
 	return -1;
 }
 
-vector<vector<double>> AroyaReaderHelper::getData() {
-	vector<vector<double>>temp;
-	vector<double>item;
-	int i, j, rows, columns;
-	rows = buffer[0].size();
-	columns = buffer.size();
-	for (i = 0; i < rows; i++) {
-		item.clear();
-		for (j = 0; j < columns; j++) {
-			item.push_back(buffer[j][i]);
-		}
-		temp.push_back(item);
-	}
-	return temp;
-}
 void AroyaReaderHelper::writeFile(const char*fileName) {
 	vector<vector<double>>ans = getData();
 	ofstream fout;
@@ -211,4 +196,42 @@ void AroyaReaderHelper::normalization() {
 	else {
 		printf("AroyaReaderHelper::normalization()cannot write normal.csv\n");
 	}
+}
+
+int AroyaReaderHelper::getRows() {
+	return buffer[0].size();
+}
+int AroyaReaderHelper::getColumns() {
+	return table.size();
+}
+
+vector<vector<double>> AroyaReaderHelper::getData() {
+	vector<vector<double>>temp;
+	vector<double>item;
+	int i, j, rows, columns;
+	rows = buffer[0].size();
+	columns = buffer.size();
+	for (i = 0; i < rows; i++) {
+		item.clear();
+		for (j = 0; j < columns; j++) {
+			item.push_back(buffer[j][i]);
+		}
+		temp.push_back(item);
+	}
+	return temp;
+}
+
+double** AroyaReaderHelper::getDataPointer() {
+	double**temp;
+	int i, j, rows, columns;
+	rows = buffer[0].size();
+	columns = buffer.size();
+	temp = new double*[rows];
+	for (i = 0; i < rows; i++) {
+		temp[i] = new double[columns];
+		for (j = 0; j < columns; j++) {
+			temp[i][j] = buffer[j][i];
+		}
+	}
+	return temp;
 }
