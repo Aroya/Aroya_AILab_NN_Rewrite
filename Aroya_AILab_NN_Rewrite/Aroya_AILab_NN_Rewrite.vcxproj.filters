@@ -33,9 +33,6 @@
     <ClCompile Include="lib\BPNN.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\BPNN2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="lib\BPNN_Activation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,9 +51,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\BPNN.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\BPNN2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\BPNN_Activation.h">

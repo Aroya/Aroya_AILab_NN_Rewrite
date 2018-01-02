@@ -118,7 +118,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="lib\BPNN.cpp" />
-    <ClCompile Include="lib\BPNN2.cpp" />
     <ClCompile Include="lib\BpnnReaderHelper.cpp" />
     <ClCompile Include="lib\BPNN_Activation.cpp" />
     <ClCompile Include="lib\Date.cpp" />
@@ -128,7 +127,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\BPNN.h" />
-    <ClInclude Include="lib\BPNN2.h" />
     <ClInclude Include="lib\BpnnReaderHelper.h" />
     <ClInclude Include="lib\BPNN_Activation.h" />
     <ClInclude Include="lib\Date.h" />
