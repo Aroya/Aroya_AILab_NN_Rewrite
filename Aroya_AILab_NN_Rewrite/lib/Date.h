@@ -19,6 +19,10 @@ public:
 	int getDateInstant();
 	//获取月份
 	int getMonth();
+	//判断节假日
+	int getHoliday();
+
+	int getYear();
 private:
 	int year, month, day, weekday, instant;
 	const static int StartYear = 2000;

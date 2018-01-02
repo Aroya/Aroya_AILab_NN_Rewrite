@@ -7,6 +7,8 @@
 #include<sstream>
 using namespace std;
 
+#define Bpnn_Init 1
+
 //展示实验结果用
 //#define ShowAllNode
 

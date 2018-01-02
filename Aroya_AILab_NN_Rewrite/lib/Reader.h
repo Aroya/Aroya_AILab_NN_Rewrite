@@ -37,6 +37,8 @@ public:
 	void deleteInstantZero();
 	//连续降至离散
 	void PercisionDown(const int&column);
+	//删除特定数据
+	void deleteRows(const char*TableName, const char*DataType);
 };
 
 #endif

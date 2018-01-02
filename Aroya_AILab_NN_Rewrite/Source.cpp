@@ -4,7 +4,7 @@ using namespace std;
 #include"lib\Reader.h"
 #include"lib\BpnnReaderHelper.h"
 #include"lib\BPNN_Activation.h"
-//#define Test
+#define Test
 int main() {
 	AroyaReader train;
 	//train.read("examples/test0.csv");
@@ -17,13 +17,13 @@ int main() {
 	trainHelper.BPNN_bicycleSetInsert(train);
 	trainHelper.normalization();
 	trainHelper.saveTable("table.csv");
-	trainHelper.writeFile("test0_out_train.csv");
+	//trainHelper.writeFile("test0_out_train.csv");
 
 	//system("pause");
 
 	BPNNBicycleSetHelper trainFlag;
 	trainFlag.BPNN_bicycleSetInsertFlag(train);
-	trainFlag.writeFile("test0_out_flag.csv");
+	//trainFlag.writeFile("test0_out_flag.csv");
 
 #ifdef Test
 	AroyaReader test;
@@ -31,13 +31,11 @@ int main() {
 	BPNNBicycleSetHelper testHelper;
 	testHelper.BPNN_bicycleSet(test);
 	testHelper.BPNN_bicycleSetInsert(test);
-	testHelper.writeFile("test0_out_test2.csv");
+	//testHelper.writeFile("test0_out_test2.csv");
 	testHelper.transformTable("table.csv");
 	testHelper.normalization();
-	testHelper.writeFile("test0_out_test.csv");
+	//testHelper.writeFile("test0_out_test.csv");
 #endif // Test
-
-
 
 	int layers = 3;
 	BPNN bpnn(layers);
@@ -53,9 +51,11 @@ int main() {
 	int tdr = testHelper.getRows();
 #endif // Test
 
-	for (int i = 0; i < 500; i++) {
+	for (int i = 0; i < 999999; i++) {
 		bpnn.runGroup(db, fdb, dr, softmax, softmaxD);
+
 #ifdef Test
+		//output to out/result_CpuClockTicks_MseOnTrainTest.csv
 		bpnn.runGroup(tdb, nullptr, tdr, softmax, softmaxD, 0);
 #endif // Test
 
@@ -64,8 +64,6 @@ int main() {
 #ifndef Test
 	bpnn.runGroup(db, nullptr, dr, softmax, softmaxD, 0);
 #endif // !Test
-
-
 
 	//for (int i = 0; i < 100; i++)
 	//bpnn.runGroup(db, fdb, dr, sigmoid, sigmoidD);

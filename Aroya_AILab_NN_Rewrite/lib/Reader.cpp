@@ -154,7 +154,9 @@ void AroyaReader::dispartTime(const char*tableName, const bool&flag) {
 	//table
 	data[0].push_back("month");
 	data[0].push_back("weekday");
-
+	//holiday
+	//data[0].push_back("holiday");
+	//data[0].push_back("year");
 	//temp str
 	string str;
 	for (int i = 1; i < getRows(); i++) {
@@ -173,6 +175,22 @@ void AroyaReader::dispartTime(const char*tableName, const bool&flag) {
 		internalSst << date.getWeekday();
 		internalSst >> str;
 		data[i].push_back(str);
+
+		////get holiday
+		////clear stringstream
+		//internalSst.str("");
+		//internalSst.clear();
+		//internalSst << date.getHoliday();
+		//internalSst >> str;
+		//data[i].push_back(str);
+
+		////get year
+		////clear stringstream
+		//internalSst.str("");
+		//internalSst.clear();
+		//internalSst << date.getYear();
+		//internalSst >> str;
+		//data[i].push_back(str);
 	}
 	//删除原数据列
 	if (flag)deleteColumn(column);
@@ -214,5 +232,16 @@ void AroyaReader::PercisionDown(const int&column) {
 			internalSst << int(doubleTemp);
 		}
 		internalSst >> data[i][column];
+	}
+}
+void AroyaReader::deleteRows(const char*TableName, const char*DataType) {
+	int column = findTable(TableName);
+	int i, j = getRows();
+	for (i = 1; i < j; i++) {
+		if (data[i][column] == DataType) {
+			deleteRow(i);
+			i--;
+			j = getRows();
+		}
 	}
 }

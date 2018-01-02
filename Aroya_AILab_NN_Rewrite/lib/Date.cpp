@@ -118,3 +118,93 @@ bool static PureNumber(const char&t) {
 int AroyaDate::getWeekday() { return weekday; }
 int AroyaDate::getDateInstant() { return instant; }
 int AroyaDate::getMonth() { return month; }
+
+int AroyaDate::getHoliday() {
+	switch (month)
+	{
+	case 1:
+		switch (day)
+		{
+		case 17://Martin Luther King Jr. Day
+
+			return 1;
+		default:
+			return 0;
+		}
+	case 2:
+		switch (day)
+		{
+		case 21://Washington's Birthday
+
+			return 1;
+		default:
+			return 0;
+		}
+	case 4:
+		switch (day)
+		{
+		case 15://DC Emancipation Day
+			return 1;
+		default:
+			return 0;
+		}
+	case 5:
+		switch (day)
+		{
+		case 30://Memorial Day
+			return 1;
+		default:
+			return 0;
+		}
+	case 6:
+		switch (day)
+		{
+		case 4://Independence Day
+
+			return 1;
+		default:
+			return 0;
+		}
+	case 9:
+		switch (day)
+		{
+		case 5://Labor Day
+			return 1;
+		default:
+			return 0;
+		}
+	case 10:
+		switch (day)
+		{
+		case 10://Columbus Day
+			return 1;
+		default:
+			return 0;
+		}
+	case 11:
+		switch (day)
+		{
+		case 11://Veterans Day
+		case 24://Thanksgiving Day
+			return 1;
+		default:
+			return 0;
+		}
+	case 12:
+		switch (day)
+		{
+		case 31://New Year's Day
+		case 26://Christmas Day
+			return 1;
+		default:
+			return 0;
+		}
+	default:
+		return 0;
+	}
+	return 0;
+}
+
+int AroyaDate::getYear() {
+	return year;
+}
