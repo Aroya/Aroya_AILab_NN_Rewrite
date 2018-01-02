@@ -63,9 +63,9 @@ void BPNN::setLayerNodes(int*Nodes) {
 			layerW[i][k] = new double[nodeReader2];
 			fixW[i][k] = new double[nodeReader2];
 			//init bias
-			bias[i][k] = 1;
+			bias[i][k] = Bpnn_Init;
 			for (l = 0; l < nodeReader2; l++) {
-				layerW[i][k][l] = 1;
+				layerW[i][k][l] = Bpnn_Init;
 			}
 		}
 	}
@@ -85,7 +85,7 @@ void BPNN::clearData() {
 		j = layerNodes[i];
 		m = layerNodes[p];
 		for (k = 0; k < j; k++) {
-			//layerData[i][k] = 0;
+			layerData[i][k] = 0;
 			expected[i][k] = 0;
 			activation[i][k] = 0;
 			fixBias[i][k] = 0;
@@ -196,7 +196,7 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 		}
 
 		if (writeFile > 0) {//>0训练
-			cout << (loss /= double(groups)) << endl;
+			cout << "Loss:\t" << (loss /= double(groups)) << endl;
 			learn(groups);
 		}
 		else {//<0验证
@@ -208,10 +208,14 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 		sst.clear();
 		sst << loss;
 		sst >> sstOut2;
-		if (sstOut2 == "nan" || sstOut2 == "-nan(ind)"
-			|| loss>10899.0) {
-			cout << "Error:loss=" << loss << endl;
+		if (loss>11000) {
+			cout << "Test error:loss too high:\t" << loss << endl;
 			return;
+		}
+		if (sstOut2 == "nan" || sstOut2 == "-nan(ind)") {
+			cout << "Error:\t" << loss << endl;
+			system("pause");
+			exit(0);
 		}
 
 		outputFileName = "out/result_";
@@ -272,16 +276,31 @@ double BPNN::dynamicRate() {
 
 	//if(forward>0)return 0.0001 / (1 + exp(-loss));
 	//else return -0.0001 / (1 + exp(-loss));
-	//单层
-	if (loss > 12000)return 0.0009;
-	else if (loss > 11000)return 0.0006;
-	else if (loss > 10763)return 0.0005;
-	else return 0.0001;
+	//单层 20 without year
+	if (loss > 13000)return 0.0009;
+	else if (loss > 12000)return 0.0005;
+	else if (loss > 11000)return 0.0004;
+	else if (loss > 10763)return 0.0003;
+	else return 0.00001;
+	//单层30 with year
+	//if (loss > 13000)return 0.0009;
+	//else if (loss > 12000)return 0.0005;
+	//else if (loss > 11000)return 0.0004;
+	//else if (loss > 10763)return 0.0003;
+	//else if (loss > 9000)return 0.0001;
+	//else return 0.000001;
 
-	//ReLinear
-	//if (loss > 12000)return 0.001;
-	//else if (loss > 11000)return 0.0005;
+	//单层120
+	//if (loss > 12000)return 0.0009;
+	//else if (loss > 11200)return 0.0006;
 	//else return 0.0001;
-	//return forward / 100;
-	//return 100;
+
+	//只训练2012
+	//if (loss > 30000)return 0.001;
+	//else if (loss > 16000)return 0.0001;
+	////else if (loss > 11000)return 0.0004;
+	////else if (loss > 10763)return 0.0003;
+	////else if (loss > 9000)return 0.0001;
+	//else if (loss > 13500)return 0.00009;
+	//else return 0.00001;
 }
