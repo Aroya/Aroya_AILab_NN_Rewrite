@@ -6,9 +6,9 @@ BPNNBicycleSetHelper::BPNNBicycleSetHelper() {
 }
 void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
 	//删除空值行
-	int i, j;
+	int i, j, k = reader.getColumns() - 1;
 	for (i = 0; i < reader.getRows(); i++) {
-		for (j = 0; j < reader.getColumns(); j++) {
+		for (j = 0; j < k; j++) {
 			if (reader.getStringData(i, j) == "?") {
 				reader.deleteRow(i);
 				i--;
@@ -23,15 +23,19 @@ void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
 	//处理离散的数据
 	reader.discrete(reader.findTable("weekday"));
 	reader.discrete(reader.findTable("month"));
+	//reader.deleteColumn(reader.findTable("month"));
 
 	//处理非数字类型数据
 	//时间离散化
 	reader.discrete(reader.findTable("hr"));
+	
+	
 	//天气离散化
 	reader.discrete(reader.findTable("weathersit"));
 
 	//删除数据编号
 	reader.deleteColumn(reader.findTable("instant"));
+
 }
 
 void BPNNBicycleSetHelper::BPNN_bicycleSetInsert(AroyaReader&reader) {

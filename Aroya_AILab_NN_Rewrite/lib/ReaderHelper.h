@@ -29,6 +29,11 @@ public:
 	vector<vector<double>> getData();
 	//for bpnn to load
 	double** getDataPointer();
+
+	//记录table
+	void saveTable(const char*fileName);
+	//更变为记录的table顺序
+	void transformTable(const char*fileName);
 private:
 	int findTable(const char*tableName);
 	vector<string>table;

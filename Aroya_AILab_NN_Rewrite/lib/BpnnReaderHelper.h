@@ -13,6 +13,7 @@ public:
 	void BPNN_bicycleSetInsert(AroyaReader&reader);
 	//仅插入flag数据
 	void BPNN_bicycleSetInsertFlag(AroyaReader&reader);
+
 };
 
 #endif

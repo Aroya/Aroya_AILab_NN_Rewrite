@@ -69,7 +69,13 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\Aurora\VisioStudio\eigen3;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Aurora\VisioStudio\eigen3;$(IncludePath)</IncludePath>
+    <ExcludePath>C:\Aurora\VisioStudio\eigen3;$(ExcludePath)</ExcludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -111,14 +117,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="lib\BPNN.cpp" />
+    <ClCompile Include="lib\BPNN2.cpp" />
     <ClCompile Include="lib\BpnnReaderHelper.cpp" />
+    <ClCompile Include="lib\BPNN_Activation.cpp" />
     <ClCompile Include="lib\Date.cpp" />
     <ClCompile Include="lib\Reader.cpp" />
     <ClCompile Include="lib\ReaderHelper.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lib\BPNN.h" />
+    <ClInclude Include="lib\BPNN2.h" />
     <ClInclude Include="lib\BpnnReaderHelper.h" />
+    <ClInclude Include="lib\BPNN_Activation.h" />
     <ClInclude Include="lib\Date.h" />
     <ClInclude Include="lib\Reader.h" />
     <ClInclude Include="lib\ReaderHelper.h" />

@@ -235,3 +235,56 @@ double** AroyaReaderHelper::getDataPointer() {
 	}
 	return temp;
 }
+
+void AroyaReaderHelper::saveTable(const char*fileName) {
+	ofstream fout;
+	fout.open(fileName);
+	if (fout.is_open()) {
+		int i, j = getColumns();
+		fout << table[0];
+		for (i = 1; i < j; i++) {
+			fout << ',' << table[i];
+		}
+		fout << endl;
+		fout.close();
+	}
+	else {
+		printf("AroyaReaderHelper::saveTable() cannot open %s\n", fileName);
+	}
+}
+//更变为记录的table顺序
+void AroyaReaderHelper::transformTable(const char*fileName) {
+	ifstream fin;
+	fin.open(fileName);
+	if (fin.is_open()) {
+		AroyaReader reader;
+		reader.read(fileName);
+
+		int i, j, k, l, p;
+		j = reader.getColumns();
+		vector<string>table_;
+		for (i = 0; i < j; i++)table_.push_back(reader.getStringData(0, i));
+		
+		l = getRows();
+		vector<vector<double>>buffer_;
+		for (i = 0; i < j; i++) {
+			buffer_.push_back(empty);
+			for (k = 0; k < l; k++) {
+				buffer_[i].push_back(0);
+			}
+		}
+		for (i = 0; i < j; i++) {
+			p = findTable(table_[i].c_str());
+			if (p > -1) {
+				for (k = 0; k < l; k++) {
+					buffer_[i][k] = buffer[p][k];
+				}
+			}
+		}
+		buffer = buffer_;
+		table = table_;
+	}
+	else {
+		printf("AroyaReaderHelper::transformTable() cannot open %s\n", fileName);
+	}
+}
