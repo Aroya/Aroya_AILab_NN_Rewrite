@@ -28,13 +28,20 @@ void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
 	//处理非数字类型数据
 	//时间离散化
 	reader.discrete(reader.findTable("hr"));
-	
-	
+
+
 	//天气离散化
 	reader.discrete(reader.findTable("weathersit"));
 
 	//删除数据编号
 	reader.deleteColumn(reader.findTable("instant"));
+
+	//连续降为离散
+	reader.PercisionDown(reader.findTable("windspeed"));
+	reader.discrete(reader.findTable("windspeed"));
+
+	//hum离散
+	reader.discrete(reader.findTable("hum"));
 
 }
 
@@ -45,7 +52,7 @@ void BPNNBicycleSetHelper::BPNN_bicycleSetInsert(AroyaReader&reader) {
 	j = reader.getColumns();
 	for (i = 0; i < j; i++) {
 		if (reader.getStringData(0, i) != "cnt")
-		insert(reader, i);
+			insert(reader, i);
 	}
 }
 

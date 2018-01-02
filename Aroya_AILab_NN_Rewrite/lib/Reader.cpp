@@ -22,7 +22,7 @@ void AroyaReader::read(const char*fileName) {
 	int nowPoint = 0;
 	while (fin.good() && (reading = fin.get()) != -1) {
 		//数据结束 处理数据
-		if (reading == ','|| reading == '\n') {
+		if (reading == ',' || reading == '\n') {
 			if (didntInit) {					//init this row
 				data.push_back(emptyVector);
 				didntInit = false;
@@ -31,7 +31,7 @@ void AroyaReader::read(const char*fileName) {
 
 			buffer.clear();						//clear buffer
 			if (reading == '\n') {				//next row
-				nowPoint++;	
+				nowPoint++;
 				didntInit = true;
 			}
 		}
@@ -61,6 +61,7 @@ int AroyaReader::findTable(const char*tableName) {
 	for (int i = 0; i < tables; i++) {
 		if (data[0][i] == tableName)return i;
 	}
+	cout << "Cannot find " << tableName << endl;
 	return -1;
 }
 int AroyaReader::getRows() { return data.size(); }
@@ -90,7 +91,7 @@ void AroyaReader::discrete(const int&column) {
 
 	//添加数据
 	//首行列名称 原table名+'/'+值
-	for (i = 0; i < nums; i++)data[0].push_back(data[0][column]+"/"+tables[i]);
+	for (i = 0; i < nums; i++)data[0].push_back(data[0][column] + "/" + tables[i]);
 	//每行存在则0，不存在为1
 	for (i = 1; i < rows; i++) {
 		for (j = 0; j < nums; j++) {
@@ -146,7 +147,7 @@ void AroyaReader::deleteRow(const int&row) {
 	data.erase(data.begin() + row);
 }
 
-void AroyaReader::dispartTime(const char*tableName,const bool&flag) {
+void AroyaReader::dispartTime(const char*tableName, const bool&flag) {
 	int column = findTable(tableName);
 	AroyaDate date;
 
@@ -187,5 +188,31 @@ void AroyaReader::deleteInstantZero() {
 			i--;
 			k--;
 		}
+	}
+}
+void AroyaReader::PercisionDown(const int&column) {
+	if (column < 0) return;
+	int i, k = getRows();
+	double doubleTemp, doubleTemp2;
+	for (i = 1; i < k; i++) {
+		//clear
+		internalSst.clear();
+		internalSst.str("");
+		//read data
+		internalSst << data[i][column];
+		internalSst >> doubleTemp;
+		//test
+		doubleTemp2 = doubleTemp + 0.40;
+		//clear
+		internalSst.str("");
+		internalSst.clear();
+		//judge
+		if (int(doubleTemp2) > int(doubleTemp)) {
+			internalSst << int(doubleTemp2);
+		}
+		else {
+			internalSst << int(doubleTemp);
+		}
+		internalSst >> data[i][column];
 	}
 }

@@ -28,13 +28,15 @@ public:
 	void deleteRow(const int&row);
 	//日期yyyy:mm:dd→table mm,weekday
 	//默认删除原数据列
-	void dispartTime(const char*tableName,const bool&deleteOrigin=true);
+	void dispartTime(const char*tableName, const bool&deleteOrigin = true);
 	//非连续数字→离散table
 	void discrete(const int&column);
 	//自动搜索所有列，自动转所有非数字连续列为离散的列
 	void discrete();
 	//处理非法数据
 	void deleteInstantZero();
+	//连续降至离散
+	void PercisionDown(const int&column);
 };
 
 #endif
