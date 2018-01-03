@@ -155,8 +155,8 @@ void AroyaReader::dispartTime(const char*tableName, const bool&flag) {
 	data[0].push_back("month");
 	data[0].push_back("weekday");
 	//holiday
-	//data[0].push_back("holiday");
-	//data[0].push_back("year");
+	data[0].push_back("holiday");
+	data[0].push_back("year");
 	//temp str
 	string str;
 	for (int i = 1; i < getRows(); i++) {
@@ -176,21 +176,21 @@ void AroyaReader::dispartTime(const char*tableName, const bool&flag) {
 		internalSst >> str;
 		data[i].push_back(str);
 
-		////get holiday
-		////clear stringstream
-		//internalSst.str("");
-		//internalSst.clear();
-		//internalSst << date.getHoliday();
-		//internalSst >> str;
-		//data[i].push_back(str);
+		//get holiday
+		//clear stringstream
+		internalSst.str("");
+		internalSst.clear();
+		internalSst << date.getHoliday();
+		internalSst >> str;
+		data[i].push_back(str);
 
-		////get year
-		////clear stringstream
-		//internalSst.str("");
-		//internalSst.clear();
-		//internalSst << date.getYear();
-		//internalSst >> str;
-		//data[i].push_back(str);
+		//get year
+		//clear stringstream
+		internalSst.str("");
+		internalSst.clear();
+		internalSst << date.getYear();
+		internalSst >> str;
+		data[i].push_back(str);
 	}
 	//删除原数据列
 	if (flag)deleteColumn(column);

@@ -23,7 +23,7 @@ void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
 	//处理离散的数据
 	reader.discrete(reader.findTable("weekday"));
 	reader.discrete(reader.findTable("month"));
-	//reader.discrete(reader.findTable("year"));
+	reader.discrete(reader.findTable("year"));
 	//reader.deleteColumn(reader.findTable("month"));
 
 	//处理非数字类型数据
