@@ -208,7 +208,7 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 		sst.clear();
 		sst << loss;
 		sst >> sstOut2;
-		if (loss>11000) {
+		if (loss>9000) {
 			cout << "Test error:loss too high:\t" << loss << endl;
 			return;
 		}
@@ -277,18 +277,18 @@ double BPNN::dynamicRate() {
 	//if(forward>0)return 0.0001 / (1 + exp(-loss));
 	//else return -0.0001 / (1 + exp(-loss));
 	//单层 20 without year
-	if (loss > 13000)return 0.0009;
-	else if (loss > 12000)return 0.0005;
-	else if (loss > 11000)return 0.0004;
-	else if (loss > 10763)return 0.0003;
-	else return 0.00001;
-	//单层30 with year
 	//if (loss > 13000)return 0.0009;
 	//else if (loss > 12000)return 0.0005;
 	//else if (loss > 11000)return 0.0004;
 	//else if (loss > 10763)return 0.0003;
-	//else if (loss > 9000)return 0.0001;
-	//else return 0.000001;
+	//else return 0.00001;
+	//单层30 with year
+	if (loss > 13000)return 0.0009;
+	else if (loss > 12000)return 0.0005;
+	else if (loss > 11000)return 0.0004;
+	else if (loss > 10763)return 0.0003;
+	else if (loss > 9500)return 0.0001;
+	else return 0.00001;
 
 	//单层120
 	//if (loss > 12000)return 0.0009;
