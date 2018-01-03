@@ -38,11 +38,11 @@ void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
 	reader.deleteColumn(reader.findTable("instant"));
 
 	//连续降为离散
-	reader.PercisionDown(reader.findTable("windspeed"));
-	reader.discrete(reader.findTable("windspeed"));
+	//reader.PercisionDown(reader.findTable("windspeed"));
+	//reader.discrete(reader.findTable("windspeed"));
 
 	//hum离散
-	reader.discrete(reader.findTable("hum"));
+	//reader.discrete(reader.findTable("hum"));
 
 	//删除11年数据
 	//reader.deleteRows("year/2011", "1");

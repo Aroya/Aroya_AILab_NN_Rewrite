@@ -121,6 +121,7 @@
     <ClCompile Include="lib\BpnnReaderHelper.cpp" />
     <ClCompile Include="lib\BPNN_Activation.cpp" />
     <ClCompile Include="lib\Date.cpp" />
+    <ClCompile Include="lib\Divider.cpp" />
     <ClCompile Include="lib\Reader.cpp" />
     <ClCompile Include="lib\ReaderHelper.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="lib\BpnnReaderHelper.h" />
     <ClInclude Include="lib\BPNN_Activation.h" />
     <ClInclude Include="lib\Date.h" />
+    <ClInclude Include="lib\Divider.h" />
     <ClInclude Include="lib\Reader.h" />
     <ClInclude Include="lib\ReaderHelper.h" />
   </ItemGroup>

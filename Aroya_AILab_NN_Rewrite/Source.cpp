@@ -1,11 +1,14 @@
 #include<iostream>
 using namespace std;
 #include"lib\BPNN.h"
+#include"lib\Divider.h"
 #include"lib\Reader.h"
 #include"lib\BpnnReaderHelper.h"
 #include"lib\BPNN_Activation.h"
 #define Test
 int main() {
+	//Divider("data/train.csv");
+
 	AroyaReader train;
 	//train.read("examples/test0.csv");
 	train.read("data/train.csv");
@@ -40,7 +43,7 @@ int main() {
 	int layers = 3;
 	BPNN bpnn(layers);
 	bpnn.setInputNodes(trainHelper.getColumns());
-	int l[2] = { 20,1 };
+	int l[2] = { 30,1 };
 	bpnn.setLayerNodes(l);
 	double **db = trainHelper.getDataPointer();
 	double **fdb = trainFlag.getDataPointer();

@@ -270,6 +270,7 @@ void BPNN::learn(const int&groups) {
 	}
 }
 double BPNN::dynamicRate() {
+	return 0.0001;
 #ifdef ShowAllNode//展示实验结果
 	return 0.1;
 #endif
