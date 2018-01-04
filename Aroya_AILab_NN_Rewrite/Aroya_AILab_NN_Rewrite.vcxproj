@@ -76,6 +76,9 @@
     <IncludePath>C:\Aurora\VisioStudio\eigen3;$(IncludePath)</IncludePath>
     <ExcludePath>C:\Aurora\VisioStudio\eigen3;$(ExcludePath)</ExcludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\Aurora\VisioStudio\eigen3;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -117,7 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="lib\BPNN.cpp" />
+    <ClCompile Include="lib\BPNN2.cpp" />
     <ClCompile Include="lib\BpnnReaderHelper.cpp" />
     <ClCompile Include="lib\BPNN_Activation.cpp" />
     <ClCompile Include="lib\Date.cpp" />
@@ -127,7 +130,7 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lib\BPNN.h" />
+    <ClInclude Include="lib\BPNN2.h" />
     <ClInclude Include="lib\BpnnReaderHelper.h" />
     <ClInclude Include="lib\BPNN_Activation.h" />
     <ClInclude Include="lib\Date.h" />

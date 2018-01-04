@@ -118,11 +118,11 @@ void BPNN::updateLayers(double(*active)(const double&)) {
 		}
 	}
 	//最后一层
-	//i = layers - 1;
-	//nodeReader = layerNodes[i];
-	//for (j = 0; j < nodeReader; j++) {
-	//	activation[i][j] = layerData[i][j];
-	//}
+	i = layers - 1;
+	nodeReader = layerNodes[i];
+	for (j = 0; j < nodeReader; j++) {
+		activation[i][j] = layerData[i][j];
+	}
 }
 void BPNN::setExpectData(double* Data, double(*active)(const double&)) {
 	int i = layers - 1;
@@ -141,17 +141,17 @@ void BPNN::updateParameter(double(*activeD)(const double&)) {
 		nodesReader = layerNodes[i];
 		nodesReader2 = layerNodes[k];
 		//clear data before
-		for (l = 0; l < nodesReader2; l++) {
-			expected[k][l] = 0;
-		}
+		//for (l = 0; l < nodesReader2; l++) {
+		//	expected[k][l] = 0;
+		//}
 		for (j = 0; j < nodesReader; j++) {
 			//bias
 			//biasDiff = 2.0 * (expected[i][j] - activation[i][j])*activeD(layerData[i][j]);
-			//if (i == layers - 1) {
-			//	biasDiff = 2.0 * expected[i][j];
-			//}
-			//else biasDiff = 2.0 * expected[i][j]*activeD(layerData[i][j]);
-			biasDiff = 2.0 * expected[i][j] * activeD(layerData[i][j]);
+			if (i == layers - 1) {
+				biasDiff = expected[i][j];
+			}
+			else biasDiff = expected[i][j]*activeD(layerData[i][j]);
+			//biasDiff = 2.0 * expected[i][j] * activeD(layerData[i][j]);
 #ifdef ShowAllNode//展示实验结果
 			biasDiff = 2.0 * expected[i][j] * activeD(layerData[i][j]);
 			cout << "layer:" << i << "\tnode:" << j << "\tbiasDiff:" << biasDiff << endl;
@@ -169,7 +169,7 @@ void BPNN::updateParameter(double(*activeD)(const double&)) {
 		}
 		//average expected before
 		//for (l = 0; l < nodesReader2; l++) {
-		//	expected[k][l] /= i;
+		//	expected[k][l] /= nodesReader;
 		//}
 
 		//learning W_i and bias
@@ -196,11 +196,11 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 		}
 
 		if (writeFile > 0) {//>0训练
-			cout << "Loss:\t" << (loss /= double(groups)) << endl;
+			cout << "Loss:\t\t" << (loss /= double(groups)) << endl;
 			learn(groups);
 		}
 		else {//<0验证
-			cout << ',' << (loss /= double(groups)) << endl;
+			cout << "ValiLoss:\t" << (loss /= double(groups)) << endl;
 		}
 	}
 	else {//==0测试
@@ -208,7 +208,7 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 		sst.clear();
 		sst << loss;
 		sst >> sstOut2;
-		if (loss>9000) {
+		if (loss>10000) {
 			cout << "Test error:loss too high:\t" << loss << endl;
 			return;
 		}
@@ -240,6 +240,10 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 		}
 		fout.close();
 	}
+#ifdef ShowAllNode
+	system("pause");
+#endif // ShowAllNodes
+
 }
 void BPNN::learn(const int&groups) {
 	int i, j, k, l, nodesReader, nodesReader2;
@@ -270,7 +274,7 @@ void BPNN::learn(const int&groups) {
 	}
 }
 double BPNN::dynamicRate() {
-	return 0.0001;
+	//return 0.00001;
 #ifdef ShowAllNode//展示实验结果
 	return 0.1;
 #endif
@@ -284,17 +288,18 @@ double BPNN::dynamicRate() {
 	//else if (loss > 10763)return 0.0003;
 	//else return 0.00001;
 	//单层30 with year
-	if (loss > 13000)return 0.0009;
-	else if (loss > 12000)return 0.0005;
-	else if (loss > 11000)return 0.0004;
-	else if (loss > 10763)return 0.0003;
-	else if (loss > 9500)return 0.0001;
-	else return 0.00001;
+	//if (loss > 13000)return 0.0009;
+	//else if (loss > 12000)return 0.0005;
+	//else if (loss > 11000)return 0.0004;
+	//else if (loss > 10763)return 0.0003;
+	//else if (loss > 9500)return 0.0001;
+	//else return 0.00001;
 
 	//单层120
-	//if (loss > 12000)return 0.0009;
-	//else if (loss > 11200)return 0.0006;
-	//else return 0.0001;
+	if (loss > 60000)return 0.005;
+	else if (loss > 28900)return 0.001;
+	else if (loss > 9000)return 0.0005;
+	else return 0.0001;
 
 	//只训练2012
 	//if (loss > 30000)return 0.001;

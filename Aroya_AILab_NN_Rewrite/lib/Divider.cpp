@@ -12,14 +12,14 @@ void Divider(const char*filename) {
 		return;
 	}
 	ofstream fout_train, fout_validation;
-	fout_train.open("train.csv");
-	fout_validation.open("validation.csv");
+	fout_train.open("data/train.csv");
+	fout_validation.open("data/validation.csv");
 	if (!fout_train.is_open()) {
-		cout << "Cannot open train.csv\n";
+		cout << "Cannot open data/train.csv\n";
 		return;
 	}
 	if (!fout_validation.is_open()) {
-		cout << "Cannot open validation.csv\n";
+		cout << "Cannot open data/validation.csv\n";
 		return;
 	}
 	string str;
