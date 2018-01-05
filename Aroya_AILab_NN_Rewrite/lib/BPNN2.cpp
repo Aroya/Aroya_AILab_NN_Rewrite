@@ -8,6 +8,7 @@ static string sstOut2;
 double defaultActive(const double&t) { return t; }
 double defaultActiveD(const double&t) { return 1.0; }
 double BPNN::dynamic() {
+	return 0.0001;
 	if(loss>20000) return 0.0001;
 	else if (loss>13000) return 0.00005;
 	else if (loss>9000) return 0.00001;
@@ -198,10 +199,10 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 		loss = 0;
 		//forward = 0;
 		for (int i = 0; i < groups; i++) {
-			
+			setInputData(group[i], active);
 			updateLayers(active);
 			setExpectData(flag[i], active);
-			setInputData(group[i], active);
+			
 			//if (i == 2)system("pause");
 			//cout << "******************\n" << fixY[2] << endl;
 			if (writeFile > 0)updateParameter(activeD);
