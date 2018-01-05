@@ -170,9 +170,9 @@ void BPNN::setExpectData(double*Data, double(*active)(const double&)) {
 	int size = layerNodes[last];
 	temp.resize(size);
 	for (int i = 0; i < size; i++) {
-		temp(i) = Data[i];
+		fixY[last](i) = Data[i] - X[last](i);
 	}
-	fixY[last] = temp - X[last];
+	
 	//sigmoid
 	//fixY[last] = temp - X_Origin[last];
 }

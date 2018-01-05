@@ -73,7 +73,7 @@
     <IncludePath>C:\Aurora\VisioStudio\eigen3;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Aurora\VisioStudio\eigen3;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Aurora\VisualStudio\eigen3;$(IncludePath)</IncludePath>
     <ExcludePath>C:\Aurora\VisioStudio\eigen3;$(ExcludePath)</ExcludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
