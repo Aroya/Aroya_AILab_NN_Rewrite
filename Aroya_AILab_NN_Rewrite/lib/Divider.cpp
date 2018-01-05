@@ -30,9 +30,9 @@ void Divider(const char*filename) {
 	}
 	int counter = 0;
 	while (fin >> str) {
-		if (counter > 4) {
+		if (counter > 15920) {
 			fout_validation << str << endl;
-			counter = 0;
+			//counter = 0;
 		}
 		else {
 			fout_train << str << endl;

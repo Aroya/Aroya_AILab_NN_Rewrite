@@ -9,8 +9,19 @@ double defaultActive(const double&t) { return t; }
 double defaultActiveD(const double&t) { return 1.0; }
 double BPNN::dynamic() {
 	if(loss>20000) return 0.0001;
-	else if (loss>10000) return 0.00005;
-	else return 0.00001;
+	else if (loss>13000) return 0.00005;
+	else if (loss>9000) return 0.00001;
+	else if (loss > 7000) return 0.000005;
+	else return 0.000001;
+	//多层神经网路
+	//if(loss>20000) return 0.00001;
+	//else if (loss>10000) return 0.000005;
+	//else return 0.000001;
+	//sigmoid 
+	//多层神经网路
+	//if (loss>20000) return 0.0001;
+	//else if (loss>10000) return 0.00005;
+	//else return 0.00001;
 }
 BPNN_init::BPNN_init(int*nodes_, const int&layers_) {
 	nodes = nodes_;
@@ -101,11 +112,23 @@ void BPNN::updateLayers(double(*active)(const double&)) {
 
 		//h=WX
 		X_Origin[i] = W[i] * X[j] + Bias[i];
+
 		//激活
 		l = layerNodes[i];
+#ifndef LastLayerLinear
 		for (k = 0; k < l; k++) {
 			X[i](k) = active(X_Origin[i](k));
 		}
+#endif
+#ifdef LastLayerLinear
+		if (i == layers - 1) {
+			X[i] = X_Origin[i];
+		}
+		else for (k = 0; k < l; k++) {
+			X[i](k) = active(X_Origin[i](k));
+		}
+#endif
+
 	}
 }
 //Update W and bias
@@ -114,7 +137,18 @@ void BPNN::updateParameter(double(*activeD)(const double&)) {
 	for (i = layers - 1, j = layers - 2; i > 0; i--, j--) {
 		l = layerNodes[i];
 		for (k = 0; k < l; k++) {
+#ifdef LastLayerLinear
+			if (i == layers - 1) {
+				Diff[i](k) = X_Origin[i](k);
+			}
+			else {
+				Diff[i](k) = activeD(X_Origin[i](k));
+				
+			}
+#endif
+#ifndef LastLayerLinear
 			Diff[i](k) = activeD(X_Origin[i](k));
+#endif
 			diffBias[i](k) = fixY[i](k)*Diff[i](k);
 		}
 		//cout << "layers:\t\t" << i << endl;
@@ -139,6 +173,8 @@ void BPNN::setExpectData(double*Data, double(*active)(const double&)) {
 		temp(i) = Data[i];
 	}
 	fixY[last] = temp - X[last];
+	//sigmoid
+	//fixY[last] = temp - X_Origin[last];
 }
 void BPNN::learn(const int&groups) {
 	int i;
@@ -163,7 +199,6 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 		//forward = 0;
 		for (int i = 0; i < groups; i++) {
 			
-
 			updateLayers(active);
 			setExpectData(flag[i], active);
 			setInputData(group[i], active);
@@ -190,7 +225,7 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 		sst.clear();
 		sst << loss;
 		sst >> sstOut2;
-		if (loss>9000) {
+		if (loss>10000) {
 			cout << "Test error:loss too high:\t" << loss << endl;
 			return;
 		}

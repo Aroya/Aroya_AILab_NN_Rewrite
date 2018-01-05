@@ -6,14 +6,14 @@ using namespace std;
 #include"lib\BpnnReaderHelper.h"
 #include"lib\BPNN_Activation.h"
 #define Test
-//#define validate
+#define validate
 int main() {
 	//Divider("data/origin.csv");
 
 	AroyaReader train;
 	//train.read("examples/xor.csv");
-	//train.read("data/train.csv");
-	train.read("data/origin.csv");
+	train.read("data/train.csv");
+	//train.read("data/origin.csv");
 
 
 	//helper处理数据
@@ -55,10 +55,10 @@ int main() {
 	//testHelper.writeFile("test0_out_test.csv");
 #endif // Test
 
-	int layers = 5;
+	int layers = 3;
 	BPNN bpnn(layers);
 	bpnn.setInputNodes(trainHelper.getColumns());
-	int l[4] = { 600,400,200,1 };
+	int l[2] = {100,1 };
 	bpnn.setLayerNodes(l);
 	double **db = trainHelper.getDataPointer();
 	double **fdb = trainFlag.getDataPointer();
@@ -75,11 +75,11 @@ int main() {
 #endif // Test
 
 	for (int i = 0; i < 999999; i++) {
-		cout << i << "\t\t";
+		cout << "************" << i << "************\n";
 		bpnn.runGroup(db, fdb, dr, softmax, softmaxD);
 		//bpnn.runGroup(db, nullptr, dr, softmax, softmaxD, 0);
 		//bpnn.runGroup(db, fdb, dr, sigmoid, sigmoidD);
-		//bpnn.runGroup(db, fdb, dr, sigmoid, sigmoidD,0);
+		
 		//bpnn.runGroup(db, fdb, dr);
 		//bpnn.runGroup(db, fdb, dr, defaultActive, defaultActiveD, 0);
 #ifdef validate
@@ -88,9 +88,10 @@ int main() {
 #ifdef Test
 		//output to out/result_CpuClockTicks_MseOnTrainTest.csv
 		bpnn.runGroup(tdb, nullptr, tdr, softmax, softmaxD, 0);
+		//bpnn.runGroup(tdb, nullptr, tdr, sigmoid, sigmoidD, 0);
 #endif // Test
 
-
+		cout << "*************************\n";
 	}
 #ifndef Test
 	bpnn.runGroup(db, nullptr, dr, softmax, softmaxD, 0);

@@ -11,7 +11,7 @@ using namespace std;
 #include<Eigen/Dense>
 using namespace Eigen;
 //#define ShowAllNodes
-
+//#define LastLayerLinear
 double defaultActive(const double&t);
 double defaultActiveD(const double&t);
 

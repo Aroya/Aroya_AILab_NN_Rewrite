@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /Aroya_AILab_NN_Rewrite/submit12-31-2017
+/Aroya_AILab_NN_Rewrite/out_remote
