@@ -150,15 +150,19 @@ void AroyaReader::deleteRow(const int&row) {
 void AroyaReader::dispartTime(const char*tableName, const bool&flag) {
 	int column = findTable(tableName);
 	AroyaDate date;
+	AroyaDate Christmas;
 
 	//table
 	data[0].push_back("month");
 	data[0].push_back("weekday");
 	//holiday
 	data[0].push_back("holiday");
+	data[0].push_back("workingday");
 	data[0].push_back("year");
+	data[0].push_back("nearChristmas");
 	//temp str
 	string str;
+	int j;
 	for (int i = 1; i < getRows(); i++) {
 		date.input(data[i][column]);
 		//clear stringstream
@@ -184,6 +188,13 @@ void AroyaReader::dispartTime(const char*tableName, const bool&flag) {
 		internalSst >> str;
 		data[i].push_back(str);
 
+		//workingday
+		internalSst.str("");
+		internalSst.clear();
+		internalSst << date.getWorkingDay();
+		internalSst >> str;
+		data[i].push_back(str);
+
 		//get year
 		//clear stringstream
 		internalSst.str("");
@@ -191,6 +202,18 @@ void AroyaReader::dispartTime(const char*tableName, const bool&flag) {
 		internalSst << date.getYear();
 		internalSst >> str;
 		data[i].push_back(str);
+
+		//get nearChristmas
+		Christmas.input(date.getYear(), 12, 26);
+		//clear stringstream
+		j = date.getDateInstant() - Christmas.getDateInstant();
+		//23~26~29 day
+		if (j > 3 || j < -3) {
+			data[i].push_back("0");
+		}
+		else {
+			data[i].push_back("1");
+		}
 	}
 	//删除原数据列
 	if (flag)deleteColumn(column);

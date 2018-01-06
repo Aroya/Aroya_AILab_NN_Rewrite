@@ -13,6 +13,7 @@ public:
 	?是任何非数字字符
 	*/
 	void input(const string&dateStr);
+	void input(const int&yourYear, const int&yourMonth, const int&yourDay);
 	//获取星期
 	int getWeekday();
 	//获取与标准时间的日期差
@@ -21,7 +22,7 @@ public:
 	int getMonth();
 	//判断节假日
 	int getHoliday();
-
+	int getWorkingDay();
 	int getYear();
 private:
 	int year, month, day, weekday, instant;

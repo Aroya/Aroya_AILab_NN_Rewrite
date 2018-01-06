@@ -39,6 +39,14 @@ void AroyaDate::input(const string&str) {
 	sst.clear();
 	sst >> day;
 
+	input(year, month, day);
+}
+void AroyaDate::input(const int&yourYear, const int&yourMonth, const int&yourDay) {
+	year = yourYear;
+	month = yourMonth;
+	day = yourDay;
+
+	int i;
 	//计算日期差instant和weekday
 	instant = 0;
 	//年
@@ -93,7 +101,7 @@ void AroyaDate::input(const string&str) {
 			instant += December;
 			break;
 		default:
-			printf("Error month:%d\n",i);
+			printf("Error month:%d\n", i);
 			system("pause");
 			break;
 		}
@@ -111,14 +119,18 @@ void AroyaDate::input(const string&str) {
 		}
 	}
 }
-
 bool static PureNumber(const char&t) {
 	return t >= '0'&&t <= '9';
 }
 int AroyaDate::getWeekday() { return weekday; }
 int AroyaDate::getDateInstant() { return instant; }
 int AroyaDate::getMonth() { return month; }
-
+int AroyaDate::getWorkingDay() {
+	if (getHoliday() == 0
+		&& getWeekday() > 0 && getWeekday() < 6
+		)return 1;
+	else return 0;
+}
 int AroyaDate::getHoliday() {
 	switch (month)
 	{

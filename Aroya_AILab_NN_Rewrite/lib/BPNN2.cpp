@@ -4,25 +4,28 @@ static stringstream sst;
 static string outputFileName;
 static string sstOut;
 static string sstOut2;
-
 double defaultActive(const double&t) { return t; }
 double defaultActiveD(const double&t) { return 1.0; }
 double BPNN::dynamic() {
+	//2隐藏层
 	return 0.0001;
-	if(loss>20000) return 0.0001;
-	else if (loss>13000) return 0.00005;
-	else if (loss>9000) return 0.00001;
-	else if (loss > 7000) return 0.000005;
-	else return 0.000001;
+	//3隐藏层
+	//return 0.00001;
+	//return 0.0005;
+	//if(loss>20000) return 0.0001;
+	//else if (loss>13000) return 0.00005;
+	//else if (loss>9000) return 0.00001;
+	//else if (loss > 7000) return 0.000005;
+	//else return 0.000001;
 	//多层神经网路
 	//if(loss>20000) return 0.00001;
 	//else if (loss>10000) return 0.000005;
 	//else return 0.000001;
 	//sigmoid 
 	//多层神经网路
-	//if (loss>20000) return 0.0001;
-	//else if (loss>10000) return 0.00005;
-	//else return 0.00001;
+	if (loss>20000) return 0.0005;
+	//else if (loss>10000) return 0.0001;
+	else return 0.0001;
 }
 BPNN_init::BPNN_init(int*nodes_, const int&layers_) {
 	nodes = nodes_;
@@ -140,7 +143,7 @@ void BPNN::updateParameter(double(*activeD)(const double&)) {
 		for (k = 0; k < l; k++) {
 #ifdef LastLayerLinear
 			if (i == layers - 1) {
-				Diff[i](k) = X_Origin[i](k);
+				Diff[i](k) = 1;
 			}
 			else {
 				Diff[i](k) = activeD(X_Origin[i](k));
@@ -212,7 +215,6 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 				loss += pow(fixY[lastLayer](j), 2);
 			}
 		}
-
 		if (writeFile > 0) {//>0训练
 			cout << "Loss:\t\t" << (loss /= double(groups)) << endl;
 			learn(groups);
@@ -226,7 +228,7 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 		sst.clear();
 		sst << loss;
 		sst >> sstOut2;
-		if (loss>10000) {
+		if (loss>MinAccurary) {
 			cout << "Test error:loss too high:\t" << loss << endl;
 			return;
 		}
@@ -252,7 +254,7 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 			updateLayers(active);
 			for (int i = 0; i < layerNodes[layers - 1]; i++) {
 				//fout << int(activation[layers - 1][i]) << endl;
-				fout << int(X[layers - 1](i)) << endl;
+				fout << max(int(X[layers - 1](i)),0) << endl;
 				//fout << X[layers - 1](i) << endl;
 			}
 		}

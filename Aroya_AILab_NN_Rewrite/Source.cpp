@@ -1,7 +1,7 @@
 //#define EIGEN_USE_MKL_ALL
 //#define EIGEN_VECTORIZE_SSE4_2
+#define EIGEN_VECTORIZE_AVX2
 #include<iostream>
-#include<omp.h>
 using namespace std;
 #include"lib\BPNN2.h"
 #include"lib\Divider.h"
@@ -11,15 +11,6 @@ using namespace std;
 #define Test
 //#define validate
 int main() {
-	//omp_set_num_threads(4);
-	//
-	//Eigen::initParallel();
-	//Eigen::setNbThreads(4);
-	//Eigen::MatrixXd mxd;
-	//mxd.resize(10000,10000);
-	//mxd.setRandom();
-	//mxd*mxd.transpose();
-	//system("pause");
 
 	//Divider("data/origin.csv");
 
@@ -43,7 +34,7 @@ int main() {
 	BPNNBicycleSetHelper trainFlag;
 	trainFlag.BPNN_bicycleSetInsertFlag(train);
 	//trainFlag.writeFile("test0_out_flag.csv");
-
+	//system("pause");
 #ifdef validate
 	AroyaReader vali;
 	vali.read("data/validation.csv");
@@ -68,10 +59,17 @@ int main() {
 	//testHelper.writeFile("test0_out_test.csv");
 
 
-	int layers = 3;
+	//int layers;
+	//int l[] = { 100,100,1 };
+	//layers = sizeof(l) / sizeof(int);
+	//cout << layers << "\t" << l << endl;
+	//system("pause");
+	
+	int l[] = { 100,100,1 };
+	int layers = sizeof(l) / sizeof(int) + 1;
 	BPNN bpnn(layers);
 	bpnn.setInputNodes(trainHelper.getColumns());
-	int l[2] = {1000,1 };
+	
 	bpnn.setLayerNodes(l);
 	double **db = trainHelper.getDataPointer();
 	double **fdb = trainFlag.getDataPointer();
@@ -88,9 +86,8 @@ int main() {
 
 
 	for (int i = 0; i < 999999; i++) {
-		printf("************%d************\n",i);
+		printf("************%d*************\n",i);
 		bpnn.runGroup(db, fdb, dr, softmax, softmaxD);
-		//bpnn.runGroup(db, nullptr, dr, softmax, softmaxD, 0);
 		//bpnn.runGroup(db, fdb, dr, sigmoid, sigmoidD);
 		
 		//bpnn.runGroup(db, fdb, dr);
@@ -104,7 +101,6 @@ int main() {
 		//bpnn.runGroup(tdb, nullptr, tdr, sigmoid, sigmoidD, 0);
 #endif // Test
 
-		printf("*************************\n");
 	}
 #ifndef Test
 	bpnn.runGroup(tdb, nullptr, tdr, sigmoid, sigmoidD, 0);
