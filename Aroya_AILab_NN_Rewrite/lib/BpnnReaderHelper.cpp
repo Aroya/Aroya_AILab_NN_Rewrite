@@ -41,6 +41,12 @@ void BPNNBicycleSetHelper::BPNN_bicycleSet(AroyaReader&reader) {
 	//reader.PercisionDown(reader.findTable("windspeed"));
 	//reader.discrete(reader.findTable("windspeed"));
 
+	//reader.PercisionDown(reader.findTable("temp"));
+	//reader.discrete(reader.findTable("temp"));
+
+	//reader.PercisionDown(reader.findTable("atemp"));
+	//reader.discrete(reader.findTable("atemp"));
+
 	//hum¿Î…¢
 	//reader.discrete(reader.findTable("hum"));
 

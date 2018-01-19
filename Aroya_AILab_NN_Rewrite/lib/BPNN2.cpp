@@ -7,30 +7,20 @@ static string sstOut2;
 double defaultActive(const double&t) { return t; }
 double defaultActiveD(const double&t) { return 1.0; }
 double BPNN::dynamic() {
+	//单层
+	//return 0.001;
+	//5隐藏层
+	//return 0.000005;
 	//2隐藏层
-	return 0.0001;
+	//if(loss>10000)return 0.0005;
+	//else return 0.0001;
 	//3隐藏层
 	//return 0.00001;
-	//return 0.0005;
-	//if(loss>20000) return 0.0001;
-	//else if (loss>13000) return 0.00005;
-	//else if (loss>9000) return 0.00001;
-	//else if (loss > 7000) return 0.000005;
-	//else return 0.000001;
-	//多层神经网路
-	//if(loss>20000) return 0.00001;
-	//else if (loss>10000) return 0.000005;
-	//else return 0.000001;
-	//sigmoid 
-	//多层神经网路
-	if (loss>20000) return 0.0005;
-	//else if (loss>10000) return 0.0001;
-	else return 0.0001;
+	//4隐藏层
+	//最终结果使用静态
+	return 0.00005;
 }
-BPNN_init::BPNN_init(int*nodes_, const int&layers_) {
-	nodes = nodes_;
-	layers = layers_;
-}
+
 BPNN::BPNN(const int&CountOfLayers) {
 	layers = CountOfLayers;
 	layerNodes = new int[CountOfLayers];
@@ -162,8 +152,12 @@ void BPNN::updateParameter(double(*activeD)(const double&)) {
 		//cout << "X.trans\n";
 		//cout << X[j].transpose() << endl;
 		//system("pause");
+
+		//累计当前批梯度的偏移
 		fixBias[i] += diffBias[i];
+		//w偏移=Bias偏移*对应Xi
 		fixW[i] += diffBias[i] * X[j].transpose();
+		//前向传递
 		fixY[j] = W[i].transpose()*diffBias[i];
 	}
 }
@@ -176,9 +170,6 @@ void BPNN::setExpectData(double*Data, double(*active)(const double&)) {
 	for (int i = 0; i < size; i++) {
 		fixY[last](i) = Data[i] - X[last](i);
 	}
-	
-	//sigmoid
-	//fixY[last] = temp - X_Origin[last];
 }
 void BPNN::learn(const int&groups) {
 	int i;
@@ -198,25 +189,25 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 	double(*active)(const double&), double(*activeD)(const double&),
 	int writeFile) {
 	if (writeFile) {
+		//清空偏移量
 		clearFix();
 		loss = 0;
-		//forward = 0;
 		for (int i = 0; i < groups; i++) {
 			setInputData(group[i], active);
+			//后向传递
 			updateLayers(active);
 			setExpectData(flag[i], active);
-			
-			//if (i == 2)system("pause");
-			//cout << "******************\n" << fixY[2] << endl;
+
+			//前向传递
 			if (writeFile > 0)updateParameter(activeD);
 			int lastLayer = layers - 1;
 			for (int j = 0; j < layerNodes[lastLayer]; j++) {
-				//forward += flag[i][j] - layerData[layers - 1][j];
 				loss += pow(fixY[lastLayer](j), 2);
 			}
 		}
 		if (writeFile > 0) {//>0训练
 			cout << "Loss:\t\t" << (loss /= double(groups)) << endl;
+			//学习前向传递的内容
 			learn(groups);
 		}
 		else {//<0验证
@@ -253,9 +244,7 @@ void BPNN::runGroup(double**group, double**flag, const int&groups,
 			setInputData(group[i], active);
 			updateLayers(active);
 			for (int i = 0; i < layerNodes[layers - 1]; i++) {
-				//fout << int(activation[layers - 1][i]) << endl;
 				fout << max(int(X[layers - 1](i)),0) << endl;
-				//fout << X[layers - 1](i) << endl;
 			}
 		}
 		fout.close();

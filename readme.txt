@@ -1,18 +1,25 @@
 项目为VS项目
-https://github.com/Aroya/Aroya_AILab_NN_Rewrite
 
-main函数在Source.cpp中 默认3层,中间层为20个节点
+main函数在Source.cpp中，具体运行方法可以查看注释
+为了提高迭代速度，我默认注释掉分文件的函数和验证集的宏定义
+最优的设置为{200,100,50,1}
+迭代到训练集上误差1404.3时得到的最好结果:测试集上正确率54.97413016
+输出的文件都在out/文件夹中，输出文件格式
+result_CPUTicks数_训练集误差.csv
+大概在训练集上误差为1800时测试集上正确率为56,需要很长的时间才能降到54.97413016
+
+使用到的库:Eigen3(在eigen3/中，需要在项目设置中包括该库才可以运行)
+	Eigen3是一个纯矩阵库，提供矩阵的乘法、加减法、点乘、转置等方便高效的操作。
+
+文件夹data/中
+	orgin.csv为原训练集
+	test.csv为原测试集
 
 文件夹lib/中
-	Reader负责文件读取
-	ReaderHelper和子类BpnnReaderHelper负责对读取的生数据进行离散化、归一化等处理
+	Bpnn为Lab6中实现的有问题的代码，已废弃使用
+	BPNN_Activation中为softmax和其他测试过的激活函数
+	Bpnn2负责神经网路部分
 	Date负责处理时间字符串为月份、日期、星期、节日数据
-	Bpnn负责神经网路部分
-
-当在训练集上的平均误差>11000时，不输出测试集结果
-	平均误差<11000时，运行测试集，结果输出在out/目录下，文件格式为
-	result_CpuClockTicks_MseOnTrainTest.csv
-	CpuClockTicks为使用ctime的clock获取的CPU时间，用作随机数，并为生成的文件按时间排序
-	MseOnTrainTest为运行测试集时的平均误差
-
-	上交的最好数据为之前在训练集上平均误差为10878.8的结果，因为优化了步长，多次迭代可以得到训练集上平均误差更小的结果，应该会得到更优的结果。
+	Divider负责分割文件
+	Reader负责文件读取
+	ReaderHelper和子类BpnnReaderHelper负责对读取的生数据进行离散化、归一化等处理，并生成神经网路需要的数据结构

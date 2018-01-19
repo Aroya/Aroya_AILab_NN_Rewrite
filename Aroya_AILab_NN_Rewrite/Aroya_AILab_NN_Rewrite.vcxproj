@@ -77,7 +77,8 @@
     <ExcludePath>C:\Aurora\VisioStudio\eigen3;$(ExcludePath)</ExcludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Aurora\VisioStudio\mkl;C:\Aurora\VisioStudio\eigen3;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018.0.124\windows\mkl\include;C:\Aurora\VisioStudio\eigen3;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018.0.124\windows\compiler\lib\intel64_win;C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018.0.124\windows\compiler\lib\ia32_win;C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018.0.124\windows\mkl\lib\intel64_win;C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2018.0.124\windows\mkl\lib\ia32_win;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

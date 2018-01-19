@@ -16,14 +16,6 @@ using namespace Eigen;
 double defaultActive(const double&t);
 double defaultActiveD(const double&t);
 
-
-class BPNN_init {
-public:
-	int *nodes;
-	int layers;
-	BPNN_init(int*nodes_, const int&layers_);
-};
-
 class BPNN {
 public:
 	//contain input,hidden and output

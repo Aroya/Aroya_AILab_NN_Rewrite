@@ -165,6 +165,7 @@ void AroyaReader::dispartTime(const char*tableName, const bool&flag) {
 	int j;
 	for (int i = 1; i < getRows(); i++) {
 		date.input(data[i][column]);
+
 		//clear stringstream
 		internalSst.str("");
 		internalSst.clear();
@@ -180,10 +181,16 @@ void AroyaReader::dispartTime(const char*tableName, const bool&flag) {
 		internalSst >> str;
 		data[i].push_back(str);
 
+
+		//get nearChristmas
+		Christmas.input(date.getYear(), 12, 26);
+		j = date.getDateInstant() - Christmas.getDateInstant();
+
 		//get holiday
 		//clear stringstream
 		internalSst.str("");
 		internalSst.clear();
+
 		internalSst << date.getHoliday();
 		internalSst >> str;
 		data[i].push_back(str);
@@ -203,12 +210,10 @@ void AroyaReader::dispartTime(const char*tableName, const bool&flag) {
 		internalSst >> str;
 		data[i].push_back(str);
 
-		//get nearChristmas
-		Christmas.input(date.getYear(), 12, 26);
-		//clear stringstream
-		j = date.getDateInstant() - Christmas.getDateInstant();
+
+		//near Christmas
 		//23~26~29 day
-		if (j > 3 || j < -3) {
+		if (j > 4 || j < -4) {
 			data[i].push_back("0");
 		}
 		else {
@@ -243,7 +248,7 @@ void AroyaReader::PercisionDown(const int&column) {
 		internalSst << data[i][column];
 		internalSst >> doubleTemp;
 		//test
-		doubleTemp2 = doubleTemp + 0.40;
+		doubleTemp2 = doubleTemp + 0.50;
 		//clear
 		internalSst.str("");
 		internalSst.clear();
